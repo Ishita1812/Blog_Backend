@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: ishita-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ishita-login
+          uri: lb://ishita-login
+          predicates:
+          - Path=/auth/**
+        - id: ishita-dashboard
+          uri: lb://ishita-dashboard
+          predicates:
+          - Path=/dashboard/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+          corsConfigurations:
+            '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+server:
+  port: 9093
+eureka:
+  instance:
+    hostname: localhost
